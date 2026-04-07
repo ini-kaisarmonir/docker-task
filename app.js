@@ -1,4 +1,6 @@
 const express = require('express');
+const os = require('os');
+
 const app = express();
 
 app.use(express.json());
@@ -21,7 +23,7 @@ app.post('/data', (req, res) => {
 });
 
 app.get('/health', (req, res) => {
-    res.status(200).send('OK');
+    res.status(200).send(`OK from ${os.hostname()}`);
 });
 
 const PORT = process.env.PORT || 3000;

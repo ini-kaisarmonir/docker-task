@@ -1,23 +1,19 @@
 version: '3.8'
 
 services:
-  app1:
+  app_blue_1:
     build: .
-    container_name: app1
-    restart: always
+  app_blue_2:
+    build: .
 
-  app2:
+  app_green_1:
     build: .
-    container_name: app2
-    restart: always
+  app_green_2:
+    build: .
 
   nginx:
     image: nginx:alpine
-    container_name: nginx
     ports:
       - "80:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-    depends_on:
-      - app1
-      - app2
