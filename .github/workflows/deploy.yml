@@ -23,29 +23,29 @@ jobs:
             git pull origin main
 
             echo "Detect active environment"
-            ACTIVE=$(docker compose exec nginx cat /etc/nginx/nginx.conf | grep app_blue || true)
+            ACTIVE=$(sudo docker compose exec nginx cat /etc/nginx/nginx.conf | grep app_blue || true)
 
             if [ -z "$ACTIVE" ]; then
               echo "BLUE is active → Deploy GREEN"
 
-              docker compose up -d --build --no-deps app_green_1 app_green_2
+              sudo docker compose up -d --build --no-deps app_green_1 app_green_2
 
               echo "Switching to GREEN"
-              docker compose cp nginx/nginx-green.conf nginx:/etc/nginx/nginx.conf
-              docker compose exec nginx nginx -s reload
+              sudo docker compose cp nginx/nginx-green.conf nginx:/etc/nginx/nginx.conf
+              sudo docker compose exec nginx nginx -s reload
 
               echo "Stopping BLUE"
-              docker compose stop app_blue_1 app_blue_2 || true
+              sudo docker compose stop app_blue_1 app_blue_2 || true
 
             else
               echo "GREEN is active → Deploy BLUE"
 
-              docker compose up -d --build --no-deps app_blue_1 app_blue_2
+              sudo docker compose up -d --build --no-deps app_blue_1 app_blue_2
 
               echo "Switching to BLUE"
-              docker compose cp nginx/nginx-blue.conf nginx:/etc/nginx/nginx.conf
-              docker compose exec nginx nginx -s reload
+              sudo docker compose cp nginx/nginx-blue.conf nginx:/etc/nginx/nginx.conf
+              sudo docker compose exec nginx nginx -s reload
 
               echo "Stopping GREEN"
-              docker compose stop app_green_1 app_green_2 || true
+              sudo docker compose stop app_green_1 app_green_2 || true
             fi
