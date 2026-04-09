@@ -8,7 +8,7 @@ app.use(express.json());
 app.get('/status', (req, res) => {
     res.json({
         status: 'ok',
-        message: 'Service is running',
+        message: 'Service is running, zero downtime deployment successful!',
         timestamp: new Date()
     });
 });
