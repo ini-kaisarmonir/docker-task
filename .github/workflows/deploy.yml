@@ -23,9 +23,7 @@ jobs:
             git pull origin main
 
             echo "Detect active environment"
-            ACTIVE=$(sudo docker compose exec nginx cat /etc/nginx/nginx.conf | grep app_blue || true)
-
-            if [ -z "$ACTIVE" ]; then
+            if sudo docker compose exec nginx sh -c "cat /etc/nginx/nginx.conf | grep -q app_blue"; then
               echo "BLUE is active → Deploy GREEN"
 
               sudo docker compose up -d --build --no-deps app_green_1 app_green_2
