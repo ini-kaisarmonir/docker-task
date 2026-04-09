@@ -29,7 +29,7 @@ jobs:
               sudo docker compose up -d --build --no-deps app_green_1 app_green_2
 
               echo "Switching to GREEN"
-              sudo docker compose cp nginx/nginx-green.conf nginx:/etc/nginx/nginx.conf
+              cp nginx/nginx-green.conf nginx/nginx.conf
               sudo docker compose exec nginx nginx -s reload
 
               echo "Stopping BLUE"
@@ -41,7 +41,7 @@ jobs:
               sudo docker compose up -d --build --no-deps app_blue_1 app_blue_2
 
               echo "Switching to BLUE"
-              sudo docker compose cp nginx/nginx-blue.conf nginx:/etc/nginx/nginx.conf
+              cp nginx/nginx-blue.conf nginx/nginx.conf
               sudo docker compose exec nginx nginx -s reload
 
               echo "Stopping GREEN"
